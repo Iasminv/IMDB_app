@@ -26,15 +26,16 @@
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="#4A4469"/>
+            <Setter Property="FontSize" Value="26"/>
         </Style>
 
-        <!-- Control Button -->
+        <!-- Close Button -->
         <Style TargetType="Button" x:Key="ControlButton">
             <Setter Property="Background" Value="#4A4469"/>
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Margin" Value="450,0,0,0"/>
+            <Setter Property="Margin" Value="470,0,0,0"/>
             <Setter Property="Width" Value="50"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -57,14 +58,25 @@
 
         <!-- Main Title -->
         <Style TargetType="TextBlock" x:Key="MainTitle">
-            <Setter Property="Foreground" Value="#4A4469"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="56"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Main Title -->
+        <Style TargetType="TextBlock" x:Key="SubMainTitle">
+            <Setter Property="Foreground" Value="#FFFFFF"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="10"/>
             <Setter Property="FontSize" Value="36"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+
 
     </Application.Resources>
 </Application>

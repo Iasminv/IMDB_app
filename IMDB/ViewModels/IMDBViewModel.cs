@@ -149,7 +149,7 @@ namespace IMDB.ViewModels
             CloseCommand = new RelayCommand(CloseApplication);
 
             // HomeView as the default view
-            SelectedView = new HomeView();
+            SelectedView = new MainView();
 
             // Load data
             LoadData();

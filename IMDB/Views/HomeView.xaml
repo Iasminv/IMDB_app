@@ -8,7 +8,8 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="HomeView">
 
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <TextBlock Style="{StaticResource MainTitle}">IMDB</TextBlock>
+        <TextBlock Style="{StaticResource SubMainTitle}">Search App</TextBlock>
+    </StackPanel>
 </Page>
