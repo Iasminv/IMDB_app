@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         Title="IMDB Search App" Height="800" Width="1200">
-    <Border Background="#4A4469" CornerRadius="20" Style="{StaticResource MainFrame}">
+    <Border CornerRadius="40" Style="{StaticResource MainFrame}">
         <StackPanel Orientation="Horizontal">
             <!-- Navbar Menu -->
             <Menu DockPanel.Dock="Top" Style="{StaticResource MainMenu}">

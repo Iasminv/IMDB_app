@@ -7,7 +7,8 @@
 
         <!-- Main Frame -->
         <Style TargetType="Border" x:Key="MainFrame">
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Margin" Value="20"/>
+            <Setter Property="Background" Value="#4A4469"/>
         </Style>
 
         <!-- Menu -->
@@ -15,6 +16,7 @@
             <Setter Property="Background" Value="#464062"/>
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="10"/>
         </Style>
 
         <!-- Menu Item -->
