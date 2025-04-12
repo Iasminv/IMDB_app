@@ -5,6 +5,11 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
+        <!-- Main Frame -->
+        <Style TargetType="Border" x:Key="MainFrame">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
         <!-- Menu -->
         <Style TargetType="Menu" x:Key="MainMenu">
             <Setter Property="Background" Value="#464062"/>
@@ -14,11 +19,38 @@
 
         <!-- Menu Item -->
         <Style TargetType="MenuItem" x:Key="MainMenuItem">
-            <Setter Property="Padding" Value="269,5"/>
+            <Setter Property="Padding" Value="100,10"/>
             <Setter Property="Background" Value="#464062"/>
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="#e3e3e3"/>
+            <Setter Property="BorderBrush" Value="#4A4469"/>
+        </Style>
+
+        <!-- Control Button -->
+        <Style TargetType="Button" x:Key="ControlButton">
+            <Setter Property="Background" Value="#4A4469"/>
+            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Margin" Value="450,0,0,0"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="DarkOrange"/>
+                    <Setter Property="Background" Value="#4A4469"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <!-- Main Title -->

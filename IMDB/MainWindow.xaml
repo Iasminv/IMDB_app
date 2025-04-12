@@ -9,9 +9,9 @@
         Background="Transparent"
         AllowsTransparency="True"
         ResizeMode="NoResize"
-        Title="IMDB Search App" Height="1200" Width="800">
-    <Border Background="#4A4469" CornerRadius="20">
-        <StackPanel>
+        Title="IMDB Search App" Height="800" Width="1200">
+    <Border Background="#4A4469" CornerRadius="20" Style="{StaticResource MainFrame}">
+        <StackPanel Orientation="Horizontal">
             <!-- Navbar Menu -->
             <Menu DockPanel.Dock="Top" Style="{StaticResource MainMenu}">
                 <MenuItem Header="Program" Style="{StaticResource MainMenuItem}">
@@ -23,6 +23,8 @@
                     <MenuItem Header="Tracks" Command="{Binding ShowGenresCommand}" />
                 </MenuItem>
             </Menu>
+            <!-- Close button -->
+            <Button Style="{StaticResource ControlButton}" Content="X" Command="{Binding CloseCommand}"/>
         </StackPanel>
     </Border>
 </Window>
