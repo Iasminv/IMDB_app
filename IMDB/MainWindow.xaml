@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IMDB"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        Title="IMDB Search App" Height="1200" Width="800">
+    <Border Background="#4A4469" CornerRadius="20">
+        <StackPanel>
+            <!-- Navbar Menu -->
+            <Menu DockPanel.Dock="Top" Style="{StaticResource MainMenu}">
+                <MenuItem Header="Program" Style="{StaticResource MainMenuItem}">
+                    <MenuItem Header="Exit" Command="{Binding CloseCommand}" />
+                </MenuItem>
+                <MenuItem Header="Navigate" Style="{StaticResource MainMenuItem}">
+                    <MenuItem Header="TV Shows" Command="{Binding ShowTVShowsCommand}" />
+                    <MenuItem Header="Actors" Command="{Binding ShowActorsCommand}" />
+                    <MenuItem Header="Tracks" Command="{Binding ShowGenresCommand}" />
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+    </Border>
 </Window>

@@ -4,6 +4,33 @@
              xmlns:local="clr-namespace:IMDB"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <!-- Menu -->
+        <Style TargetType="Menu" x:Key="MainMenu">
+            <Setter Property="Background" Value="#464062"/>
+            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <!-- Menu Item -->
+        <Style TargetType="MenuItem" x:Key="MainMenuItem">
+            <Setter Property="Padding" Value="269,5"/>
+            <Setter Property="Background" Value="#464062"/>
+            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#e3e3e3"/>
+        </Style>
+
+        <!-- Main Title -->
+        <Style TargetType="TextBlock" x:Key="MainTitle">
+            <Setter Property="Foreground" Value="#4A4469"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
     </Application.Resources>
 </Application>
