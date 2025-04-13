@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="IMDB.Views.ActorsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IMDB.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1120">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Back button and App Logo -->
+        <Grid Grid.Row="0">
+            <Button Content="Back to home" HorizontalAlignment="Left" Command="{Binding BackToHomeCommand}" Padding="10,5"/>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <TextBlock Text="IMDB Search App" VerticalAlignment="Center" Foreground="White" Margin="0,0,10,0"/>
+                <Border Width="40" Height="40" Background="#FF5722" CornerRadius="20">
+                    <TextBlock Text="🎬" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Actor Search -->
+        <StackPanel Grid.Row="1" Margin="0,20,0,20" Orientation="Horizontal">
+            <TextBox Width="300" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
+                     Padding="10" Margin="0,0,10,0" Background="#333" Foreground="White"
+                     BorderBrush="#555" VerticalContentAlignment="Center"/>
+            <Button Content="Search Actor" Command="{Binding SearchActorCommand}" Padding="10,5"/>
+        </StackPanel>
+
+        <!-- Actor Info -->
+        <Grid Grid.Row="2" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                <TextBlock Text="Actor or Actress Name:" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="{Binding ActorName}" Foreground="White" FontSize="18" Margin="0,5,0,0"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="0,0,20,0">
+                <TextBlock Text="Born:" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="{Binding BirthYear}" Foreground="White" FontSize="18" Margin="0,5,0,0"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Primary Profession:" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="{Binding PrimaryProfession}" Foreground="White" FontSize="18" Margin="0,5,0,0" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Filmography Table -->
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Filmography:" FontWeight="Bold" FontSize="20" Margin="0,0,0,10" Foreground="White"/>
+
+            <ListView Grid.Row="1" ItemsSource="{Binding Filmography}" Background="Transparent" BorderThickness="0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Year" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Year}" Foreground="White"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Title" Width="350">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}" Foreground="White"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Role/Position" Width="350">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding RolePosition}" Foreground="White"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Rating" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Rating, StringFormat={}{0:N1}/10}" Foreground="#FFCC00"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Background" Value="#3a3352"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Margin" Value="0,2"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

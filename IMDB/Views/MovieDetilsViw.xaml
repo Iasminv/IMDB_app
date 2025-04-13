@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="IMDB.Views.MovieDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IMDB.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1120">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Back button and App Logo -->
+        <Grid Grid.Row="0">
+            <Button Content="Back to home" HorizontalAlignment="Left" Command="{Binding BackToHomeCommand}" Padding="10,5"/>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <TextBlock Text="IMDB Search App" VerticalAlignment="Center" Foreground="White" Margin="0,0,10,0"/>
+                <Border Width="40" Height="40" Background="#FF5722" CornerRadius="20">
+                    <TextBlock Text="🎬" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Title and Rating -->
+        <Grid Grid.Row="1" Margin="0,20,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding TitleName}" FontSize="28" FontWeight="Bold" Foreground="White"/>
+            <TextBlock Grid.Column="1" Text="{Binding Rating, StringFormat=Rating: {0:N1}/10}" FontSize="22" Foreground="#FFCC00" VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- Genre Tags -->
+        <TextBlock Grid.Row="2" Text="{Binding GenreTags, StringFormat=Genre Tags: {0}}" Margin="0,0,0,20" Foreground="#AAAAAA"/>
+
+        <!-- Main Content -->
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="Overview:" FontWeight="Bold" FontSize="20" Margin="0,0,0,10" Foreground="White"/>
+                <TextBlock Text="{Binding Overview}" TextWrapping="Wrap" Margin="0,0,0,20" Foreground="White"/>
+
+                <Grid Margin="0,10,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Runtime:" FontWeight="Bold" Margin="0,0,10,0" Foreground="White"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Runtime}" Foreground="White"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Released:" FontWeight="Bold" Margin="0,0,10,0" Foreground="White"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ReleaseDate}" Foreground="White"/>
+                </Grid>
+
+                <TextBlock Text="Cast &amp; Crew:" FontWeight="Bold" FontSize="20" Margin="0,10,0,10" Foreground="White"/>
+                <TextBlock Text="{Binding CastAndCrew}" TextWrapping="Wrap" Margin="0,0,0,20" Foreground="White"/>
+
+                <TextBlock Text="Similar Titles:" FontWeight="Bold" FontSize="20" Margin="0,10,0,10" Foreground="White"/>
+                <ItemsControl ItemsSource="{Binding SimilarTitles}" Margin="0,0,0,20">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#3a3352" Margin="0,5" Padding="10">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding PrimaryTitle}" FontWeight="Bold" Foreground="White"/>
+                                    <TextBlock Text="{Binding Rating.AverageRating, StringFormat=Rating: {0:N1}/10}" Foreground="#FFCC00"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

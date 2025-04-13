@@ -4,32 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IMDB"
-        xmlns:views="clr-namespace:IMDB.Views"
         mc:Ignorable="d"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
         ResizeMode="NoResize"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Title="IMDB Search App" Height="800" Width="1200">
     <Border CornerRadius="40" Style="{StaticResource MainFrame}">
-        <StackPanel>
-            <StackPanel Orientation="Horizontal">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <!-- Navbar Menu -->
                 <Menu DockPanel.Dock="Top" Style="{StaticResource MainMenu}">
-                    <MenuItem Header="Program" Style="{StaticResource MainMenuItem}">
-                        <MenuItem Header="Exit" Command="{Binding CloseCommand}" />
-                    </MenuItem>
-                    <MenuItem Header="Navigate" Style="{StaticResource MainMenuItem}">
+                    <MenuItem Header="Menu" Style="{StaticResource MainMenuItem}">
+                        <MenuItem Header="Home" Command="{Binding ShowHomeCommand}" />
+                        <MenuItem Header="Movies" Command="{Binding ShowMoviesCommand}" />
                         <MenuItem Header="TV Shows" Command="{Binding ShowTVShowsCommand}" />
                         <MenuItem Header="Actors" Command="{Binding ShowActorsCommand}" />
+                        <MenuItem Header="Genres" Command="{Binding ShowGenresCommand}" />
+                        <MenuItem Header="Exit" Command="{Binding CloseCommand}" />
                     </MenuItem>
                 </Menu>
-                <!-- Close button -->
                 <Button Style="{StaticResource ControlButton}" Content="X" Command="{Binding CloseCommand}"/>
+                <!-- Close button -->
             </StackPanel>
 
             <!-- Main Content Area -->
-            <views:MainView DataContext="{Binding}"/>
-        </StackPanel>
+            <ContentControl Grid.Row="1" Content="{Binding CurrentView}" />
+        </Grid>
     </Border>
 </Window>

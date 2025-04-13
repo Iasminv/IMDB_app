@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace IMDB.Views
 {
     /// <summary>
-    /// Interaction logic for MainView.xaml
+    /// Interaction logic for ActorsView.xaml
     /// </summary>
-    public partial class MainView : UserControl
+    public partial class ActorsView : UserControl
     {
-        public MainView()
+        public ActorsView()
         {
             InitializeComponent();
         }

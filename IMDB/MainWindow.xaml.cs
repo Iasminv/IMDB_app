@@ -20,7 +20,14 @@ namespace IMDB
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new IMDBViewModel();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
     }
 }
