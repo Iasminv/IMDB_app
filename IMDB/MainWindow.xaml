@@ -9,6 +9,7 @@
         Background="Transparent"
         AllowsTransparency="True"
         ResizeMode="NoResize"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Title="IMDB Search App" Height="800" Width="1200">
     <Border CornerRadius="40" Style="{StaticResource MainFrame}">
         <Grid>
