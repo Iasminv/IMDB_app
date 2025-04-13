@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IMDB_App.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,21 @@ namespace IMDB.Views
     /// <summary>
     /// Interaction logic for HomeView.xaml
     /// </summary>
-    public partial class HomeView : Page
+    public partial class HomeView : UserControl
     {
         public HomeView()
         {
             InitializeComponent();
         }
+
+        private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListViewItem item && item.DataContext is Title title)
+            {
+                var viewModel = DataContext as ViewModels.HomeViewModel;
+                viewModel?.SelectTitleCommand.Execute(title);
+            }
+        }
     }
 }
+
