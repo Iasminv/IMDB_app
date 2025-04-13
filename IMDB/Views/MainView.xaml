@@ -9,7 +9,7 @@
     <StackPanel>
         <TextBlock Style="{StaticResource MainTitle}">IMDB</TextBlock>
         <TextBlock Style="{StaticResource SubMainTitle}">Search App</TextBlock>
-        <TextBox />
+        <TextBox Style="{StaticResource SearchBox}" />
         <Button />
     </StackPanel>
 </UserControl>

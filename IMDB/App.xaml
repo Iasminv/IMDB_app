@@ -26,7 +26,7 @@
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="#4A4469"/>
-            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
 
         <!-- Close Button -->
@@ -34,7 +34,7 @@
             <Setter Property="Background" Value="#4A4469"/>
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontSize" Value="26"/>
             <Setter Property="Margin" Value="470,0,0,0"/>
             <Setter Property="Width" Value="50"/>
             <Setter Property="Template">
@@ -75,6 +75,11 @@
             <Setter Property="Padding" Value="10"/>
             <Setter Property="FontSize" Value="36"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <!-- Search Box -->
+        <Style TargetType="TextBox" x:Key="SearchBox">
+            <Setter Property="Padding" Value="20"/>
         </Style>
 
 
