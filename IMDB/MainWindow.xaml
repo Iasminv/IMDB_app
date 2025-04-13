@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IMDB"
+        xmlns:views="clr-namespace:IMDB.Views"
         mc:Ignorable="d"
         WindowStyle="None"
         Background="Transparent"
@@ -21,15 +22,14 @@
                     <MenuItem Header="Navigate" Style="{StaticResource MainMenuItem}">
                         <MenuItem Header="TV Shows" Command="{Binding ShowTVShowsCommand}" />
                         <MenuItem Header="Actors" Command="{Binding ShowActorsCommand}" />
-                        <MenuItem Header="Tracks" Command="{Binding ShowGenresCommand}" />
                     </MenuItem>
                 </Menu>
                 <!-- Close button -->
                 <Button Style="{StaticResource ControlButton}" Content="X" Command="{Binding CloseCommand}"/>
             </StackPanel>
-            <StackPanel>
-                <ContentControl Content="{Binding SelectedView}" />
-            </StackPanel>
+
+            <!-- Main Content Area -->
+            <views:MainView DataContext="{Binding}"/>
         </StackPanel>
     </Border>
 </Window>
