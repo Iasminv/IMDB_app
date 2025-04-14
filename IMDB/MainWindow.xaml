@@ -18,9 +18,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
                 <!-- Navbar Menu -->
-                <Menu DockPanel.Dock="Top" Style="{StaticResource MainMenu}">
+                <Menu Grid.Column="0" Style="{StaticResource MainMenu}">
                     <MenuItem Header="Menu" Style="{StaticResource MainMenuItem}">
                         <MenuItem Header="Home" Command="{Binding ShowHomeCommand}" />
                         <MenuItem Header="Movies" Command="{Binding ShowMoviesCommand}" />
@@ -30,9 +36,13 @@
                         <MenuItem Header="Exit" Command="{Binding CloseCommand}" />
                     </MenuItem>
                 </Menu>
-                <Button Style="{StaticResource ControlButton}" Content="X" Command="{Binding CloseCommand}"/>
-                <!-- Close button -->
-            </StackPanel>
+
+                <Grid Grid.Column="1" Background="Transparent"/>
+
+                <!-- Close button-->
+                <Button Grid.Column="2" Style="{StaticResource ControlButton}" Content="X" Command="{Binding CloseCommand}" 
+                        Margin="0,10,20,0"/>
+            </Grid>
 
             <!-- Main Content Area -->
             <ContentControl Grid.Row="1" Content="{Binding CurrentView}" />
