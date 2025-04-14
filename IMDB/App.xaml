@@ -12,14 +12,14 @@
             <Setter Property="Background" Value="#4A4469"/>
         </Style>
 
-        <!-- Menu -->
+        <!-- Menu Button -->
         <Style TargetType="Menu" x:Key="MainMenu">
             <Setter Property="Background" Value="#464062"/>
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="10"/>
         </Style>
-
+        
         <!-- Menu Item -->
         <Style TargetType="MenuItem" x:Key="MainMenuItem">
             <Setter Property="Padding" Value="100,10"/>
@@ -28,8 +28,20 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="#4A4469"/>
             <Setter Property="FontSize" Value="16"/>
+            <Style.Resources>
+                <Style TargetType="MenuItem">
+                    <Setter Property="Background" Value="#464062"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter Property="Background" Value="#FF5722"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Style.Resources>
         </Style>
-
+                
         <!-- Close Button -->
         <Style TargetType="Button" x:Key="ControlButton">
             <Setter Property="Background" Value="#4A4469"/>
