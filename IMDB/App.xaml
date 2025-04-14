@@ -28,6 +28,29 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="#4A4469"/>
             <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border Background="{TemplateBinding Background}" 
+                        CornerRadius="15"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}">
+                            <Grid>
+                                <ContentPresenter Content="{TemplateBinding Header}" 
+                                        Margin="{TemplateBinding Padding}"
+                                        RecognizesAccessKey="True" />
+                                <Popup IsOpen="{TemplateBinding IsSubmenuOpen}" 
+                             Placement="Bottom"
+                             AllowsTransparency="True">
+                                    <Border Background="#464062" CornerRadius="10" Margin="0,5,0,0">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
             <Style.Resources>
                 <Style TargetType="MenuItem">
                     <Setter Property="Background" Value="#464062"/>
