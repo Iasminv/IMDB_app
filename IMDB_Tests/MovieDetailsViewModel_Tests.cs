@@ -56,6 +56,38 @@ namespace IMDB_Tests.ViewModels
         }
 
         [TestMethod]
+        public void Overview_PropertyChangedIsRaised()
+        {
+            bool propertyChanged = false;
+            _viewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(MovieDetailsViewModel.Overview))
+                    propertyChanged = true;
+            };
+
+            _viewModel.Overview = "Test Overview";
+
+            Assert.IsTrue(propertyChanged);
+            Assert.AreEqual("Test Overview", _viewModel.Overview);
+        }
+
+        [TestMethod]
+        public void GenreTags_PropertyChangedIsRaised()
+        {
+            bool propertyChanged = false;
+            _viewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(MovieDetailsViewModel.GenreTags))
+                    propertyChanged = true;
+            };
+
+            _viewModel.GenreTags = "Drama, Crime";
+
+            Assert.IsTrue(propertyChanged);
+            Assert.AreEqual("Drama, Crime", _viewModel.GenreTags);
+        }
+
+        [TestMethod]
         public void Rating_PropertyChangedIsRaised()
         {
             bool propertyChanged = false;
@@ -69,6 +101,54 @@ namespace IMDB_Tests.ViewModels
 
             Assert.IsTrue(propertyChanged);
             Assert.AreEqual(9.3m, _viewModel.Rating);
+        }
+
+        [TestMethod]
+        public void Runtime_PropertyChangedIsRaised()
+        {
+            bool propertyChanged = false;
+            _viewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(MovieDetailsViewModel.Runtime))
+                    propertyChanged = true;
+            };
+
+            _viewModel.Runtime = "142 minutes";
+
+            Assert.IsTrue(propertyChanged);
+            Assert.AreEqual("142 minutes", _viewModel.Runtime);
+        }
+
+        [TestMethod]
+        public void ReleaseDate_PropertyChangedIsRaised()
+        {
+            bool propertyChanged = false;
+            _viewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(MovieDetailsViewModel.ReleaseDate))
+                    propertyChanged = true;
+            };
+
+            _viewModel.ReleaseDate = "1994";
+
+            Assert.IsTrue(propertyChanged);
+            Assert.AreEqual("1994", _viewModel.ReleaseDate);
+        }
+
+        [TestMethod]
+        public void CastAndCrew_PropertyChangedIsRaised()
+        {
+            bool propertyChanged = false;
+            _viewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(MovieDetailsViewModel.CastAndCrew))
+                    propertyChanged = true;
+            };
+
+            _viewModel.CastAndCrew = "Tim Robbins, Morgan Freeman";
+
+            Assert.IsTrue(propertyChanged);
+            Assert.AreEqual("Tim Robbins, Morgan Freeman", _viewModel.CastAndCrew);
         }
 
         [TestMethod]
@@ -89,19 +169,52 @@ namespace IMDB_Tests.ViewModels
         }
 
         [TestMethod]
-        public void Initialize_WithMovieType_SetsParameter()
+        public void Initialize_WithMovieType_DoesNotThrow()
         {
-            _viewModel.Initialize("movie");
-            // Since we can't easily test the database interaction without mocking,
-            // we can at least verify the method doesn't throw an exception
+            try
+            {
+                _viewModel.Initialize("movie");
+                Assert.IsTrue(true);
+            }
+            catch
+            {
+                Assert.Fail("Initialize with movie type threw an exception");
+            }
         }
 
         [TestMethod]
-        public void Initialize_WithTitleId_SetsParameter()
+        public void Initialize_WithTVSeriesType_DoesNotThrow()
         {
-            _viewModel.Initialize("tt0111161");
-            // Since we can't easily test the database interaction without mocking,
-            // we can at least verify the method doesn't throw an exception
+            try
+            {
+                _viewModel.Initialize("tvSeries");
+                Assert.IsTrue(true);
+            }
+            catch
+            {
+                Assert.Fail("Initialize with TV series type threw an exception");
+            }
+        }
+
+        [TestMethod]
+        public void Initialize_WithTitleId_DoesNotThrow()
+        {
+            try
+            {
+                _viewModel.Initialize("tt0111161");
+                Assert.IsTrue(true);
+            }
+            catch
+            {
+                Assert.Fail("Initialize with title ID threw an exception");
+            }
+        }
+
+        [TestMethod]
+        public void BackToHomeCommand_NavigatesToHome()
+        {
+            _viewModel.BackToHomeCommand.Execute(null);
+            Assert.AreEqual("HomeView", _navigationService.LastNavigatedView);
         }
     }
 }

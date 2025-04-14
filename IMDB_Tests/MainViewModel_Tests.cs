@@ -2,7 +2,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IMDB.ViewModels;
 using IMDB.Services;
 using System.Windows.Controls;
-using System;
 
 namespace IMDB_Tests.ViewModels
 {
@@ -23,11 +22,6 @@ namespace IMDB_Tests.ViewModels
         public void InitialState_PropertiesAreInitialized()
         {
             Assert.IsNull(_viewModel.CurrentView);
-        }
-
-        [TestMethod]
-        public void Commands_AreInitialized()
-        {
             Assert.IsNotNull(_viewModel.CloseCommand);
             Assert.IsNotNull(_viewModel.ShowHomeCommand);
             Assert.IsNotNull(_viewModel.ShowMoviesCommand);
@@ -37,6 +31,12 @@ namespace IMDB_Tests.ViewModels
         }
 
         [TestMethod]
+        public void Constructor_NavigatesToHome()
+        {
+            Assert.AreEqual("HomeView", _navigationService.LastNavigatedView);
+        }
+
+        [STATestMethod]
         public void CurrentView_PropertyChangedIsRaised()
         {
             bool propertyChanged = false;
@@ -56,23 +56,26 @@ namespace IMDB_Tests.ViewModels
         [TestMethod]
         public void ShowHomeCommand_NavigatesToHome()
         {
+            // Clear initial navigation
+            _navigationService.LastNavigatedView = null;
+
             _viewModel.ShowHomeCommand.Execute(null);
             Assert.AreEqual("HomeView", _navigationService.LastNavigatedView);
         }
 
         [TestMethod]
-        public void ShowMoviesCommand_NavigatesToMovieDetails()
+        public void ShowMoviesCommand_NavigatesToMovieList()
         {
             _viewModel.ShowMoviesCommand.Execute(null);
-            Assert.AreEqual("MovieDetailsView", _navigationService.LastNavigatedView);
+            Assert.AreEqual("MovieListView", _navigationService.LastNavigatedView);
             Assert.AreEqual("movie", _navigationService.LastParameter);
         }
 
         [TestMethod]
-        public void ShowTVShowsCommand_NavigatesToMovieDetails()
+        public void ShowTVShowsCommand_NavigatesToMovieList()
         {
             _viewModel.ShowTVShowsCommand.Execute(null);
-            Assert.AreEqual("MovieDetailsView", _navigationService.LastNavigatedView);
+            Assert.AreEqual("MovieListView", _navigationService.LastNavigatedView);
             Assert.AreEqual("tvSeries", _navigationService.LastParameter);
         }
 
@@ -90,12 +93,12 @@ namespace IMDB_Tests.ViewModels
             Assert.AreEqual("GenresView", _navigationService.LastNavigatedView);
         }
 
-        //[TestMethod]
-        //public void NavigationService_ViewChangeEvent_UpdatesCurrentView()
-        //{
-        //    var newView = new UserControl();
-        //    _navigationService.CurrentViewChanged?.Invoke(this, newView);
-        //    Assert.AreEqual(newView, _viewModel.CurrentView);
-        //}
+        [STATestMethod]
+        public void NavigationService_ViewChanged_UpdatesCurrentView()
+        {
+            var newView = new UserControl();
+            _navigationService.NavigateTo(newView);
+            Assert.AreEqual(newView, _viewModel.CurrentView);
+        }
     }
 }

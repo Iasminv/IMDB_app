@@ -3,8 +3,6 @@ using IMDB.ViewModels;
 using IMDB.Services;
 using System.Collections.ObjectModel;
 using IMDB_App.Models;
-using System.Windows.Controls;
-using System;
 
 namespace IMDB_Tests.ViewModels
 {
@@ -26,11 +24,6 @@ namespace IMDB_Tests.ViewModels
         {
             Assert.IsNotNull(_viewModel.Genres);
             Assert.AreEqual(0, _viewModel.Genres.Count);
-        }
-
-        [TestMethod]
-        public void Commands_AreInitialized()
-        {
             Assert.IsNotNull(_viewModel.BackToHomeCommand);
             Assert.IsNotNull(_viewModel.SelectGenreCommand);
         }
@@ -74,6 +67,31 @@ namespace IMDB_Tests.ViewModels
         {
             _viewModel.BackToHomeCommand.Execute(null);
             Assert.AreEqual("HomeView", _navigationService.LastNavigatedView);
+        }
+
+        [TestMethod]
+        public void GenresCollection_CanBeModified()
+        {
+            // Test adding to collection
+            var genre = new Genre { GenreId = 1, Name = "Action" };
+            _viewModel.Genres.Add(genre);
+            Assert.AreEqual(1, _viewModel.Genres.Count);
+
+            // Test removing from collection
+            _viewModel.Genres.Remove(genre);
+            Assert.AreEqual(0, _viewModel.Genres.Count);
+        }
+
+        [TestMethod]
+        public void GenresCollection_CanBeCleared()
+        {
+            // Add some genres
+            _viewModel.Genres.Add(new Genre { GenreId = 1, Name = "Action" });
+            _viewModel.Genres.Add(new Genre { GenreId = 2, Name = "Comedy" });
+
+            // Clear the collection
+            _viewModel.Genres.Clear();
+            Assert.AreEqual(0, _viewModel.Genres.Count);
         }
     }
 }
