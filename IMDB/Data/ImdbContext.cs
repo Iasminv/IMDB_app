@@ -32,7 +32,7 @@ public partial class ImdbContext : DbContext
     public virtual DbSet<TitleAlias> TitleAliases { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["IMDBConn"].ConnectionString);
+        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IMDB;Integrated Security=True;Trust Server Certificate=False;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
