@@ -46,7 +46,6 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <!-- More Genres Button -->
-        <Button Grid.Row="3" Content="More Genres..." HorizontalAlignment="Left" Margin="10,20,0,0" Padding="10,5"/>
+       
     </Grid>
 </UserControl>

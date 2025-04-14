@@ -30,7 +30,14 @@ namespace IMDB.ViewModels
         public string SearchText
         {
             get => _searchText;
-            set => SetProperty(ref _searchText, value);
+            set
+            {
+                if (SetProperty(ref _searchText, value) && !string.IsNullOrWhiteSpace(value) && value.Length >= 2)
+                {
+                    // Perform dynamic search as user types
+                    DynamicSearchActor();
+                }
+            }
         }
 
         public int? BirthYear
@@ -70,6 +77,24 @@ namespace IMDB.ViewModels
             {
                 _selectedActor = context.Names
                     .Where(n => n.PrimaryProfession.Contains("actor") || n.PrimaryProfession.Contains("actress"))
+                    .FirstOrDefault();
+
+                if (_selectedActor != null)
+                {
+                    LoadActorDetails();
+                }
+            }
+        }
+
+        private void DynamicSearchActor()
+        {
+            if (string.IsNullOrWhiteSpace(SearchText) || SearchText.Length < 2)
+                return;
+
+            using (var context = new ImdbContext())
+            {
+                _selectedActor = context.Names
+                    .Where(n => n.PrimaryName.Contains(SearchText))
                     .FirstOrDefault();
 
                 if (_selectedActor != null)

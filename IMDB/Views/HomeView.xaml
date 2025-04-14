@@ -16,10 +16,10 @@
 
         <!-- Navigation Buttons -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-            <Button Content="Movies" Margin="10,0" Padding="20,10" Command="{Binding NavigateToMoviesCommand}"/>
-            <Button Content="TV Shows" Margin="10,0" Padding="20,10" Command="{Binding NavigateToTVShowsCommand}"/>
-            <Button Content="Actors" Margin="10,0" Padding="20,10" Command="{Binding NavigateToActorsCommand}"/>
-            <Button Content="Genres" Margin="10,0" Padding="20,10" Command="{Binding NavigateToGenresCommand}"/>
+            <Button Content="Movies" Style="{StaticResource NavButton}" Command="{Binding NavigateToMoviesCommand}"/>
+            <Button Content="TV Shows" Style="{StaticResource NavButton}" Command="{Binding NavigateToTVShowsCommand}"/>
+            <Button Content="Actors" Style="{StaticResource NavButton}" Command="{Binding NavigateToActorsCommand}"/>
+            <Button Content="Genres" Style="{StaticResource NavButton}" Command="{Binding NavigateToGenresCommand}"/>
         </StackPanel>
 
         <!-- Logo and Title -->
@@ -28,7 +28,7 @@
             <TextBlock Text="SEARCH APP" Style="{StaticResource SubMainTitle}" HorizontalAlignment="Center"/>
 
             <!-- IMDB Logo -->
-            <Border Width="80" Height="80" Background="#FF5722" CornerRadius="40" Margin="0,20,0,0">
+            <Border Style="{StaticResource LogoBorder}">
                 <Grid>
                     <Path Data="M14,10H2V12H14V10M14,6H2V8H14V6M2,16H10V14H2V16M21.5,11.5L23,13L16,20L11.5,15.5L13,14L16,17L21.5,11.5Z" 
                           Fill="White" Stretch="Uniform" Margin="15"/>
@@ -46,41 +46,41 @@
                 <TextBox Grid.Column="0" Width="400" Height="40" 
                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
                          Style="{StaticResource SearchBox}" 
-                         Padding="10"
-                         FontSize="16"
-                         VerticalContentAlignment="Center"
-                         Background="#333"
-                         Foreground="White"
-                         BorderBrush="#555"/>
+                         FontSize="16"/>
                 <Button Grid.Column="1" Content="🔍" Width="40" Height="40" 
                         Command="{Binding SearchCommand}" 
-                        Background="#555" 
-                        Foreground="White"
-                        BorderBrush="#555"/>
+                        Style="{StaticResource SearchButton}"/>
             </Grid>
         </StackPanel>
 
         <!-- Search Results -->
-        <ListView Grid.Row="3" ItemsSource="{Binding SearchResults}" Margin="100,0" 
-                  Background="Transparent" BorderThickness="0">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Background" Value="#3a3352"/>
-                    <Setter Property="Margin" Value="0,5"/>
-                    <Setter Property="Padding" Value="10"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                    <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding PrimaryTitle}" FontWeight="Bold" FontSize="16" Foreground="White"/>
-                        <TextBlock Text="{Binding TitleType}" Foreground="#cccccc" Margin="0,5,0,0"/>
-                        <TextBlock Text="{Binding Rating.AverageRating, StringFormat=Rating: {0:N1}/10}" Foreground="#ffcc00" Margin="0,2,0,0"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid Grid.Row="3" Margin="100,0">
+            <!-- Results list -->
+            <ListView ItemsSource="{Binding SearchResults}"
+                      Visibility="{Binding IsSearched, Converter={StaticResource BoolToVis}}"
+                      Background="Transparent" BorderThickness="0">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem" BasedOn="{StaticResource ContentListItem}">
+                        <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding PrimaryTitle}" Style="{StaticResource ContentTitle}"/>
+                            <TextBlock Text="{Binding TitleType}" Style="{StaticResource ContentSubtitle}"/>
+                            <TextBlock Text="{Binding Rating.AverageRating, StringFormat=Rating: {0:N1}/10}" 
+                                      Style="{StaticResource RatingText}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Loading indicator -->
+            <Grid Style="{StaticResource LoadingPanel}" 
+                 Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}">
+                <TextBlock Text="Searching..." Style="{StaticResource LoadingText}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>
