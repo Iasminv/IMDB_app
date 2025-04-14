@@ -14,7 +14,7 @@
 
         <!-- Menu Button -->
         <Style TargetType="Menu" x:Key="MainMenu">
-            <Setter Property="Background" Value="#464062"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="10"/>
