@@ -16,7 +16,7 @@
 
         <!-- Back button and App Logo -->
         <Grid Grid.Row="0">
-            <Button Content="Back" HorizontalAlignment="Left" 
+            <Button Content="Back to home" HorizontalAlignment="Left" 
                    Command="{Binding BackCommand}" Style="{StaticResource BackButton}"/>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <TextBlock Text="IMDB Search App" VerticalAlignment="Center" Foreground="White" Margin="0,0,10,0"/>
