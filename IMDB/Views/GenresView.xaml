@@ -28,23 +28,25 @@
         <!-- Genres Title -->
         <TextBlock Grid.Row="1" Text="Genres:" FontWeight="Bold" FontSize="24" Margin="0,20,0,20" Foreground="White"/>
 
-        <!-- Genres Grid -->
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding Genres}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Command="{Binding DataContext.SelectGenreCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            CommandParameter="{Binding}"
-                            Width="200" Height="150" Margin="10" Background="#3a3352" BorderThickness="0">
-                        <TextBlock Text="{Binding Name}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <!-- Genres Grid with ScrollViewer -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Genres}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding DataContext.SelectGenreCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                CommandParameter="{Binding}"
+                                Width="200" Height="150" Margin="10" Background="#3a3352" BorderThickness="0">
+                            <TextBlock Text="{Binding Name}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
 
        
     </Grid>
