@@ -10,12 +10,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Back button and App Logo -->
         <Grid Grid.Row="0">
-            <Button Content="Back to genres" HorizontalAlignment="Left" Command="{Binding BackToGenresCommand}" Padding="10,5"/>
+            <Button Content="Back" HorizontalAlignment="Left" 
+                   Command="{Binding BackCommand}" Style="{StaticResource BackButton}"/>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <TextBlock Text="IMDB Search App" VerticalAlignment="Center" Foreground="White" Margin="0,0,10,0"/>
                 <Border Width="40" Height="40" Background="#FF5722" CornerRadius="20">
@@ -24,29 +26,48 @@
             </StackPanel>
         </Grid>
 
-        <!-- Genre Title -->
-        <TextBlock Grid.Row="1" Text="{Binding GenreName, StringFormat=Genre: {0}}" FontWeight="Bold" FontSize="24" Margin="0,20,0,20" Foreground="White"/>
+        <!-- List Title -->
+        <TextBlock Grid.Row="1" Text="{Binding ListTitle}" Style="{StaticResource SectionTitle}"/>
 
-        <!-- Movies List -->
-        <ListView Grid.Row="2" ItemsSource="{Binding Titles}" Background="Transparent" BorderThickness="0">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Background" Value="#3a3352"/>
-                    <Setter Property="Margin" Value="0,5"/>
-                    <Setter Property="Padding" Value="10"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                    <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding PrimaryTitle}" FontWeight="Bold" FontSize="16" Foreground="White"/>
-                        <TextBlock Text="{Binding TitleType}" Foreground="#cccccc" Margin="0,5,0,0"/>
-                        <TextBlock Text="{Binding Rating.AverageRating, StringFormat=Rating: {0:N1}/10}" Foreground="#ffcc00" Margin="0,2,0,0"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <!-- Search Bar -->
+        <Grid Grid.Row="2" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
+                    Height="32" FontSize="14" Margin="0,0,10,0" Style="{StaticResource SearchBox}"/>
+
+            <Button Grid.Column="1" Content="Search" 
+                   Command="{Binding SearchCommand}" Style="{StaticResource SearchButton}"/>
+        </Grid>
+
+        <!-- Movies/Shows List -->
+        <Grid Grid.Row="3">
+            <ListView ItemsSource="{Binding Titles}" Background="Transparent" BorderThickness="0">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem" BasedOn="{StaticResource ContentListItem}">
+                        <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding PrimaryTitle}" Style="{StaticResource ContentTitle}"/>
+                            <TextBlock Text="{Binding TitleType}" Style="{StaticResource ContentSubtitle}"/>
+                            <TextBlock Text="{Binding Rating.AverageRating, StringFormat=Rating: {0:N1}/10}" 
+                                      Style="{StaticResource RatingText}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Loading Indicator -->
+            <Grid Style="{StaticResource LoadingPanel}"
+                 Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}">
+                <TextBlock Text="Loading..." Style="{StaticResource LoadingText}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

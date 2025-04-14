@@ -34,10 +34,14 @@ namespace IMDB.ViewModels
             // Initialize commands
             CloseCommand = new RelayCommand(() => System.Windows.Application.Current.Shutdown());
             ShowHomeCommand = new RelayCommand(NavigateToHome);
-            ShowMoviesCommand = new RelayCommand(() => NavigateToMovies("movie"));
-            ShowTVShowsCommand = new RelayCommand(() => NavigateToMovies("tvSeries"));
+            // Modified here: navigate to list view instead of detail view
+            ShowMoviesCommand = new RelayCommand(() => NavigateToMoviesList("movie"));
+            ShowTVShowsCommand = new RelayCommand(() => NavigateToMoviesList("tvSeries"));
             ShowActorsCommand = new RelayCommand(NavigateToActors);
             ShowGenresCommand = new RelayCommand(NavigateToGenres);
+
+            // Navigate to home on initialization
+            NavigateToHome();
         }
 
         private void NavigateToHome()
@@ -45,9 +49,10 @@ namespace IMDB.ViewModels
             _navigationService.NavigateToWithViewModel<HomeView, HomeViewModel>();
         }
 
-        private void NavigateToMovies(string titleType)
+        // Modified method: navigate to movie list instead of details
+        private void NavigateToMoviesList(string titleType)
         {
-            _navigationService.NavigateToWithViewModel<MovieDetailsView, MovieDetailsViewModel>(titleType);
+            _navigationService.NavigateToWithViewModel<MovieListView, MovieListViewModel>(titleType);
         }
 
         private void NavigateToActors()
