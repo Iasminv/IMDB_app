@@ -3,8 +3,6 @@ using IMDB.ViewModels;
 using IMDB.Services;
 using System.Collections.ObjectModel;
 using IMDB_App.Models;
-using System.Windows.Controls;
-using System;
 
 namespace IMDB_Tests.ViewModels
 {
@@ -26,14 +24,17 @@ namespace IMDB_Tests.ViewModels
         {
             Assert.IsNotNull(_viewModel.Titles);
             Assert.AreEqual(0, _viewModel.Titles.Count);
-            Assert.IsNull(_viewModel.GenreName);
+            Assert.IsNull(_viewModel.ListTitle);
+            Assert.IsNull(_viewModel.SearchText);
+            Assert.IsFalse(_viewModel.IsLoading);
         }
 
         [TestMethod]
         public void Commands_AreInitialized()
         {
-            Assert.IsNotNull(_viewModel.BackToGenresCommand);
+            Assert.IsNotNull(_viewModel.BackCommand);
             Assert.IsNotNull(_viewModel.SelectTitleCommand);
+            Assert.IsNotNull(_viewModel.SearchCommand);
         }
 
         [TestMethod]
@@ -54,19 +55,72 @@ namespace IMDB_Tests.ViewModels
         }
 
         [TestMethod]
-        public void GenreName_PropertyChangedIsRaised()
+        public void ListTitle_PropertyChangedIsRaised()
         {
             bool propertyChanged = false;
             _viewModel.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(MovieListViewModel.GenreName))
+                if (e.PropertyName == nameof(MovieListViewModel.ListTitle))
                     propertyChanged = true;
             };
 
-            _viewModel.GenreName = "Action";
+            _viewModel.ListTitle = "Action Movies";
 
             Assert.IsTrue(propertyChanged);
-            Assert.AreEqual("Action", _viewModel.GenreName);
+            Assert.AreEqual("Action Movies", _viewModel.ListTitle);
+        }
+
+        [TestMethod]
+        public void SearchText_PropertyChangedIsRaised()
+        {
+            bool propertyChanged = false;
+            _viewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(MovieListViewModel.SearchText))
+                    propertyChanged = true;
+            };
+
+            _viewModel.SearchText = "Test";
+
+            Assert.IsTrue(propertyChanged);
+            Assert.AreEqual("Test", _viewModel.SearchText);
+        }
+
+        [TestMethod]
+        public void IsLoading_PropertyChangedIsRaised()
+        {
+            bool propertyChanged = false;
+            _viewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(MovieListViewModel.IsLoading))
+                    propertyChanged = true;
+            };
+
+            _viewModel.IsLoading = true;
+
+            Assert.IsTrue(propertyChanged);
+            Assert.IsTrue(_viewModel.IsLoading);
+        }
+
+        [TestMethod]
+        public void Initialize_WithMovieType_SetsCorrectListTitle()
+        {
+            _viewModel.Initialize("movie");
+            Assert.AreEqual("Movies", _viewModel.ListTitle);
+        }
+
+        [TestMethod]
+        public void Initialize_WithTVSeriesType_SetsCorrectListTitle()
+        {
+            _viewModel.Initialize("tvSeries");
+            Assert.AreEqual("TV Shows", _viewModel.ListTitle);
+        }
+
+        [TestMethod]
+        public void Initialize_WithInvalidType_SetsDefaultListTitle()
+        {
+            _viewModel.Initialize("invalid");
+            Assert.AreEqual("Titles", _viewModel.ListTitle);
         }
 
         [TestMethod]
@@ -87,24 +141,60 @@ namespace IMDB_Tests.ViewModels
         }
 
         [TestMethod]
-        public void BackToGenresCommand_NavigatesToGenres()
+        public void SearchText_ShortInput_ReloadsOriginalData()
         {
-            _viewModel.BackToGenresCommand.Execute(null);
+            _viewModel.Initialize("movie");
+            _viewModel.SearchText = "Test";  // Set initial search
+            _viewModel.IsLoading = false;
+
+            _viewModel.SearchText = "a";  // Too short to trigger search
+
+            Assert.IsFalse(_viewModel.IsLoading);
+        }
+
+        [TestMethod]
+        public void BackCommand_FromGenreView_NavigatesToGenres()
+        {
+            _viewModel.Initialize(1);  // Initialize with genre ID
+            _viewModel.BackCommand.Execute(null);
+
             Assert.AreEqual("GenresView", _navigationService.LastNavigatedView);
         }
 
         [TestMethod]
-        public void Initialize_WithValidGenreId_DoesNotThrow()
+        public void BackCommand_FromTitleTypeView_NavigatesToHome()
+        {
+            _viewModel.Initialize("movie");  // Initialize with title type
+            _viewModel.BackCommand.Execute(null);
+
+            Assert.AreEqual("HomeView", _navigationService.LastNavigatedView);
+        }
+
+        [TestMethod]
+        public void SearchCommand_DoesNotThrow()
         {
             try
             {
-                _viewModel.Initialize(1);
-                // Since we can't easily test database operations, we just verify no exception is thrown
+                _viewModel.SearchCommand.Execute(null);
                 Assert.IsTrue(true);
             }
             catch
             {
-                Assert.Fail("Initialize threw an exception");
+                Assert.Fail("Search command threw an exception");
+            }
+        }
+
+        [TestMethod]
+        public void SearchText_NullInput_DoesNotThrow()
+        {
+            try
+            {
+                _viewModel.SearchText = null;
+                Assert.IsTrue(true);
+            }
+            catch
+            {
+                Assert.Fail("Setting SearchText to null threw an exception");
             }
         }
     }

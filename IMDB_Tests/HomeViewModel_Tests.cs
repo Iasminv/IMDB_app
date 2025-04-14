@@ -3,8 +3,6 @@ using IMDB.ViewModels;
 using IMDB.Services;
 using System.Collections.ObjectModel;
 using IMDB_App.Models;
-using System;
-using System.Windows.Controls;
 
 namespace IMDB_Tests.ViewModels
 {
@@ -27,6 +25,7 @@ namespace IMDB_Tests.ViewModels
             Assert.IsNotNull(_viewModel.SearchResults);
             Assert.AreEqual(0, _viewModel.SearchResults.Count);
             Assert.IsFalse(_viewModel.IsLoading);
+            Assert.IsFalse(_viewModel.IsSearched);
             Assert.IsNull(_viewModel.SearchText);
         }
 
@@ -89,32 +88,105 @@ namespace IMDB_Tests.ViewModels
             Assert.IsTrue(propertyChanged);
             Assert.AreEqual(newResults, _viewModel.SearchResults);
         }
-    }
 
-    // Test double for INavigationService
-    public class TestNavigationService : INavigationService
-    {
-        public event EventHandler<UserControl> CurrentViewChanged;
-
-        public string LastNavigatedView { get; private set; }
-        public object LastNavigatedViewModel { get; private set; }
-        public object LastParameter { get; private set; }
-
-        public void NavigateTo(UserControl view)
+        [TestMethod]
+        public void IsSearched_PropertyChangedIsRaised()
         {
-            CurrentViewChanged?.Invoke(this, view);
+            bool propertyChanged = false;
+            _viewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(HomeViewModel.IsSearched))
+                    propertyChanged = true;
+            };
+
+            _viewModel.IsSearched = true;
+
+            Assert.IsTrue(propertyChanged);
+            Assert.IsTrue(_viewModel.IsSearched);
         }
 
-        public void NavigateToWithViewModel<TView, TViewModel>(object parameter = null)
-            where TView : UserControl
-            where TViewModel : class
+        [TestMethod]
+        public void SearchText_ShortInput_ClearsResults()
         {
-            LastNavigatedView = typeof(TView).Name;
-            LastNavigatedViewModel = typeof(TViewModel).Name;
-            LastParameter = parameter;
+            // Arrange
+            _viewModel.SearchResults.Add(new Title { PrimaryTitle = "Test" });
 
-            // Since we're in a test environment, we don't actually create the view
-            CurrentViewChanged?.Invoke(this, null);
+            // Act
+            _viewModel.SearchText = "a";  // Too short to trigger search
+
+            // Assert
+            Assert.AreEqual(0, _viewModel.SearchResults.Count);
+            Assert.IsFalse(_viewModel.IsSearched);
+        }
+
+        [TestMethod]
+        public void SearchText_EmptyInput_ClearsResults()
+        {
+            // Arrange
+            _viewModel.SearchResults.Add(new Title { PrimaryTitle = "Test" });
+
+            // Act
+            _viewModel.SearchText = "";
+
+            // Assert
+            Assert.AreEqual(0, _viewModel.SearchResults.Count);
+            Assert.IsFalse(_viewModel.IsSearched);
+        }
+
+        [TestMethod]
+        public void NavigateToMovies_UsesCorrectParameter()
+        {
+            // Act
+            _viewModel.NavigateToMoviesCommand.Execute(null);
+
+            // Assert
+            Assert.AreEqual("MovieListView", _navigationService.LastNavigatedView);
+            Assert.AreEqual("movie", _navigationService.LastParameter);
+        }
+
+        [TestMethod]
+        public void NavigateToTVShows_UsesCorrectParameter()
+        {
+            // Act
+            _viewModel.NavigateToTVShowsCommand.Execute(null);
+
+            // Assert
+            Assert.AreEqual("MovieListView", _navigationService.LastNavigatedView);
+            Assert.AreEqual("tvSeries", _navigationService.LastParameter);
+        }
+
+        [TestMethod]
+        public void SelectTitle_NavigatesToMovieDetails()
+        {
+            // Arrange
+            var title = new Title { TitleId = "tt0111161", PrimaryTitle = "The Shawshank Redemption" };
+
+            // Act
+            _viewModel.SelectTitleCommand.Execute(title);
+
+            // Assert
+            Assert.AreEqual("MovieDetailsView", _navigationService.LastNavigatedView);
+            Assert.AreEqual("tt0111161", _navigationService.LastParameter);
+        }
+
+        [TestMethod]
+        public void NavigateToActors_NavigatesToActorsView()
+        {
+            // Act
+            _viewModel.NavigateToActorsCommand.Execute(null);
+
+            // Assert
+            Assert.AreEqual("ActorsView", _navigationService.LastNavigatedView);
+        }
+
+        [TestMethod]
+        public void NavigateToGenres_NavigatesToGenresView()
+        {
+            // Act
+            _viewModel.NavigateToGenresCommand.Execute(null);
+
+            // Assert
+            Assert.AreEqual("GenresView", _navigationService.LastNavigatedView);
         }
     }
 }
